@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kuala Lumpur & Bali Travel OS</title>
+
+<style>
+:root{
+  --ink:#10100d;
+  --cream:#f6efe4;
+  --paper:#fffaf3;
+  --muted:#6f665b;
+  --gold:#b9975b;
+  --forest:#17382b;
+  --line:rgba(16,16,13,.12);
+  --shadow:0 26px 80px rgba(0,0,0,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.6;
+}
+img{width:100%;display:block;object-fit:cover}
+a{text-decoration:none;color:inherit}
+.serif{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.045em}
+
+.nav{
+  position:fixed;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(1180px,94%);
+  z-index:50;
+  display:flex;
+  gap:10px;
+  padding:10px;
+  border-radius:22px;
+  background:rgba(255,250,243,.88);
+  backdrop-filter:blur(18px);
+  box-shadow:0 16px 45px rgba(0,0,0,.1);
+}
+.logo{
+  background:var(--ink);
+  color:#fff3df;
+  border-radius:16px;
+  padding:12px 16px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.navlinks{
+  display:flex;
+  gap:6px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.navlinks::-webkit-scrollbar{display:none}
+.nav a{
+  padding:10px 13px;
+  border-radius:14px;
+  color:#51483e;
+  font-size:13px;
+  white-space:nowrap;
+}
+.nav a:hover{background:#eee3d3}
+
+.hero{
+  min-height:100vh;
+  padding:140px 6vw 70px;
+  display:flex;
+  align-items:flex-end;
+  color:white;
+  background:
+    linear-gradient(90deg,rgba(16,16,13,.92),rgba(16,16,13,.58),rgba(16,16,13,.15)),
+    url("https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=2200&q=90");
+  background-size:cover;
+  background-position:center;
+}
+.hero-inner{max-width:1180px}
+.kicker,.eyebrow{
+  color:var(--gold);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+h1{font-size:clamp(58px,10vw,146px);line-height:.86;margin-bottom:28px}
+h2{font-size:clamp(40px,6vw,82px);line-height:.93;margin-bottom:18px}
+h3{font-size:clamp(24px,2.4vw,34px);line-height:1.05;margin-bottom:10px}
+p{color:var(--muted);font-size:16.5px}
+.hero p{max-width:780px;font-size:clamp(19px,2vw,27px);color:#f0e5d5}
+
+.hero-stats{
+  margin-top:42px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  border-radius:26px;
+  overflow:hidden;
+  background:rgba(255,255,255,.18);
+}
+.hero-stats div{
+  padding:22px;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(10px);
+}
+.hero-stats span{
+  display:block;
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-bottom:7px;
+}
+.hero-stats strong{font-size:17px}
+
+section{
+  padding:88px 6vw;
+  max-width:1280px;
+  margin:auto;
+}
+.head{
+  display:grid;
+  grid-template-columns:1fr .8fr;
+  gap:38px;
+  align-items:end;
+  margin-bottom:36px;
+}
+.lead{font-size:21px;color:#5f564d}
+
+.chapter{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:32px;
+  align-items:center;
+}
+.panel{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:34px;
+  padding:36px;
+  box-shadow:var(--shadow);
+}
+.photo{
+  border-radius:34px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  background:linear-gradient(135deg,#d9b36d,#31543f);
+}
+.photo img{height:590px}
+
+.list{
+  display:grid;
+  gap:12px;
+  margin-top:22px;
+}
+.list div{
+  padding:16px 18px;
+  border-radius:18px;
+  background:#f1eadf;
+  color:#5d544a;
+}
+
+.plan-grid{
+  display:grid;
+  gap:16px;
+}
+details.day{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:28px;
+  box-shadow:0 16px 45px rgba(0,0,0,.07);
+  overflow:hidden;
+}
+summary{
+  cursor:pointer;
+  list-style:none;
+  padding:24px;
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  align-items:center;
+}
+summary::-webkit-details-marker{display:none}
+.date{
+  color:var(--gold);
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.mood{
+  padding:8px 12px;
+  border-radius:999px;
+  background:#efe5d4;
+  color:#58482f;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.day-content{
+  padding:0 24px 24px;
+}
+.schedule{
+  display:grid;
+  gap:10px;
+  margin-top:16px;
+}
+.slot{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  gap:14px;
+  padding:14px;
+  border-radius:18px;
+  background:#f4eadb;
+}
+.time{
+  font-weight:900;
+  color:var(--forest);
+  font-size:13px;
+}
+.checks{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:16px;
+}
+.check{
+  font-size:12px;
+  padding:8px 10px;
+  border-radius:999px;
+  background:#e8efe5;
+  color:#314839;
+  font-weight:800;
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+.gal{
+  min-height:340px;
+  border-radius:28px;
+  overflow:hidden;
+  position:relative;
+  background:linear-gradient(135deg,#d9b36d,#31543f);
+  box-shadow:0 20px 60px rgba(0,0,0,.12);
+}
+.gal img{height:100%}
+.gal span{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:16px;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(16,16,13,.72);
+  color:white;
+  font-size:14px;
+  backdrop-filter:blur(10px);
+}
+
+.foodgrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:22px;
+}
+.food{
+  display:grid;
+  grid-template-columns:210px 1fr;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:0 18px 55px rgba(0,0,0,.08);
+}
+.food img{height:100%;min-height:230px}
+.food .body{padding:26px}
+.tag{
+  display:inline-block;
+  color:var(--gold);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+.dark{
+  max-width:none;
+  background:var(--ink);
+  color:#fff3df;
+}
+.dark-inner{max-width:1280px;margin:auto}
+.dark p{color:#d7c7b2}
+
+.reviewgrid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+.review{
+  background:#171713;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:28px;
+  padding:26px;
+}
+.review .quote{
+  font-family:Georgia,serif;
+  color:var(--gold);
+  font-size:58px;
+  line-height:.7;
+}
+.review h3{font-size:23px;color:white}
+
+.checklist{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.todo{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:16px;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.todo input{margin-top:5px;accent-color:var(--gold)}
+
+footer{
+  padding:78px 6vw;
+  background:var(--forest);
+  color:#fff5e7;
+  text-align:center;
+}
+footer p{color:#d7cbb8}
+
+@media(max-width:1050px){
+  .hero-stats,.gallery,.reviewgrid,.checklist{grid-template-columns:1fr 1fr}
+  .chapter,.head,.foodgrid{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .nav{top:10px;width:94%;flex-direction:column;align-items:stretch}
+  .logo{text-align:center}
+  .hero{padding:155px 5vw 50px}
+  section{padding:66px 5vw}
+  .hero-stats,.gallery,.reviewgrid,.checklist{grid-template-columns:1fr}
+  .photo img{height:430px}
+  summary{display:block}
+  .mood{display:inline-block;margin-top:10px}
+  .slot{grid-template-columns:1fr}
+  .food{grid-template-columns:1fr}
+  .food img{height:235px}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="logo">Kuala Lumpur × Bali</div>
+  <div class="navlinks">
+      <a href="#overview">Uçuş Planı</a>
+    <a href="#kuala-lumpur">Kuala Lumpur</a>
+    <a href="#kuala-lumpur-plan">Kuala Lumpur Plan</a>
+    <a href="#bali">Bali</a>
+    <a href="#bali-plan">Bali Plan</a>
+    <a href="#photos">Fotoğraflar</a>
+    <a href="#food">Yemekler</a>
+    <a href="#reviews">Yorumlar</a>
+    <a href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Personal Luxury Travel OS · 2026</div>
+    <h1 class="serif">Kuala Lumpur<br>& Bali</h1>
+    <p>Şehir ışıkları, jungle sabahları, tropikal kahvaltılar, beach club günleri ve Uluwatu’da sinematik final.</p>
+
+    <div class="hero-stats">
+      <div><span>Tarih</span><strong>20 Temmuz – 14 Ağustos</strong></div>
+      <div><span>Kişi</span><strong>2 kişi · Çift tatili</strong></div>
+      <div><span>Enerji</span><strong>Luxury · Relax · Gastronomi</strong></div>
+      <div><span>Felsefe</span><strong>Az aktivite, doğru deneyim</strong></div>
+    </div>
+  </div>
+</header>
+<section id="overview">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Flight Plan</div>
+      <h2 class="serif">Uçuş planı</h2>
+    </div>
+    <p class="lead">Tüm rota bu uçuş akışının üzerine kuruluyor. Geçiş günlerini hafif tutmak planın en kritik kısmı.</p>
+  </div>
+
+  <div class="plan-grid">
+
+    <details class="day" open>
+      <summary>
+        <div>
+          <div class="date">20 Temmuz 2026 · Pazartesi</div>
+          <h3 class="serif">İstanbul → Kuala Lumpur</h3>
+        </div>
+        <span class="mood">Uzun uçuş</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot">
+            <div class="time">22:15</div>
+            <div>
+              <strong>İstanbul Havalimanı kalkış</strong>
+              <p>Uçuşu tatilin ilk ritüeli gibi düşünün: rahat kıyafet, kulaklık, uyku maskesi, hafif bakım kiti.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div>
+          <div class="date">22 Temmuz 2026 · Çarşamba</div>
+          <h3 class="serif">Kuala Lumpur varış</h3>
+        </div>
+        <span class="mood">Soft arrival</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot">
+            <div class="time">02:40</div>
+            <div>
+              <strong>Kuala Lumpur varış</strong>
+              <p>Bu gün ağır aktivite yok. Otel, duş, dinlenme, KLCC çevresi ve akşam rooftop yeterli.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div>
+          <div class="date">25 Temmuz 2026</div>
+          <h3 class="serif">Kuala Lumpur → Bali</h3>
+        </div>
+        <span class="mood">Island transfer</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot">
+            <div class="time">17:55</div>
+            <div>
+              <strong>Kuala Lumpur kalkış</strong>
+              <p>Günü hafif tutun. Havalimanına rahat geçiş ve erken check-in iyi olur.</p>
+            </div>
+          </div>
+          <div class="slot">
+            <div class="time">21:05</div>
+            <div>
+              <strong>Bali varış</strong>
+              <p>O gece plan yok. Direkt otele transfer ve uyku.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div>
+          <div class="date">12 Ağustos 2026</div>
+          <h3 class="serif">Bali → Kuala Lumpur</h3>
+        </div>
+        <span class="mood">Return transfer</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot">
+            <div class="time">07:00</div>
+            <div>
+              <strong>Bali kalkış</strong>
+              <p>Transfer çok erken olmalı. Bir gece önce valiz ve ödeme işleri tamamen bitmiş olsun.</p>
+            </div>
+          </div>
+          <div class="slot">
+            <div class="time">10:05</div>
+            <div>
+              <strong>Kuala Lumpur varış</strong>
+              <p>Son Kuala Lumpur günü: otel, dinlenme, hafif alışveriş ve sakin akşam.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div>
+          <div class="date">13–14 Ağustos 2026</div>
+          <h3 class="serif">Kuala Lumpur → İstanbul</h3>
+        </div>
+        <span class="mood">Final flight</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot">
+            <div class="time">19:15</div>
+            <div>
+              <strong>Kuala Lumpur kalkış</strong>
+              <p>13 Ağustos günü ağır aktivite koymayın. Son alışveriş + kahve + havalimanına rahat geçiş.</p>
+            </div>
+          </div>
+          <div class="slot">
+            <div class="time">06:55</div>
+            <div>
+              <strong>14 Ağustos Cuma · İstanbul varış</strong>
+              <p>Tatilin resmi kapanışı. Eve dönüş için yavaş bir gün planlamak iyi olur.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<section id="kuala-lumpur">
+  <div class="chapter">
+    <div class="photo">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=1300&q=90" alt="Kuala Lumpur skyline">
+    </div>
+
+    <div class="panel">
+      <div class="eyebrow">Chapter I · Malaysia</div>
+      <h2 class="serif">Kuala Lumpur şehirli açılış.</h2>
+      <p class="lead">Bali öncesi modern Asya enerjisi: Petronas, rooftop, Batu Caves, Chinatown ve Jalan Alor.</p>
+      <div class="list">
+        <div><strong>Petronas:</strong> Akşam ışıklı hali en etkileyici.</div>
+        <div><strong>Batu Caves:</strong> Sabah erken gidin; maymunlara dikkat.</div>
+        <div><strong>Chinatown:</strong> Central Market + kahve + kısa yürüyüş.</div>
+        <div><strong>Jalan Alor:</strong> Sokak lezzeti ve canlı gece pazarı.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="kuala-lumpur-plan">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Kuala Lumpur Daily Plan</div>
+      <h2 class="serif">Kuala Lumpur günlük planları</h2>
+    </div>
+    <p class="lead">Bu bölüm şehirdeyken direkt kullanılacak kısa ve net takip alanı.</p>
+  </div>
+
+  <div class="plan-grid">
+
+    <details class="day" open>
+      <summary>
+        <div><div class="date">22 Temmuz · Kuala Lumpur</div><h3 class="serif">Arrival & Skyline</h3></div>
+        <span class="mood">Hafif tempo</span>
+      </summary>
+      <div class="day-content">
+        <p>Çok erken varış olduğu için amaç dinlenmek ve şehre yumuşak giriş.</p>
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Otel / dinlenme</strong><p>Erken check-in mümkünse otele geçin. Değilse lounge/kahvaltı.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>KLCC & Petronas çevresi</strong><p>Kısa yürüyüş, kahve, şehir atmosferi.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Rooftop açılışı</strong><p>Petronas manzaralı kokteyl. Erken uyku.</p></div></div>
+        </div>
+        <div class="checks"><span class="check">Rezervasyon: Rooftop</span><span class="check">Enerji: %40</span></div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div><div class="date">23 Temmuz · Kuala Lumpur</div><h3 class="serif">Batu Caves & Chinatown</h3></div>
+        <span class="mood">Kültür + sokak lezzeti</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">07:30</div><div><strong>Batu Caves</strong><p>Sabah erken gidin. Daha serin, daha az kalabalık. Maymunlara dikkat.</p></div></div>
+          <div class="slot"><div class="time">13:00</div><div><strong>Chinatown & Central Market</strong><p>Kahve, kısa alışveriş, kültür yürüyüşü.</p></div></div>
+          <div class="slot"><div class="time">19:30</div><div><strong>Jalan Alor</strong><p>Satay, noodle, seafood. Kalabalık ama atmosfer güçlü.</p></div></div>
+        </div>
+        <div class="checks"><span class="check">Must eat: Satay</span><span class="check">Yanına: Su + rahat ayakkabı</span></div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div><div class="date">24 Temmuz · Kuala Lumpur</div><h3 class="serif">Luxury City Day</h3></div>
+        <span class="mood">Şık + rahat</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Geç kahvaltı</strong><p>Otel kahvaltısı veya iyi bir şehir kafesi.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Spa / alışveriş</strong><p>Pavilion Kuala Lumpur veya Suria KLCC.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Fine dining</strong><p>Michelin seçkisi veya modern Malay mutfağı.</p></div></div>
+        </div>
+        <div class="checks"><span class="check">Rezervasyon: Dinner</span><span class="check">Enerji: %55</span></div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary>
+        <div><div class="date">25 Temmuz · Kuala Lumpur → Bali</div><h3 class="serif">Island Transfer</h3></div>
+        <span class="mood">Geçiş günü</span>
+      </summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Yavaş kahvaltı</strong><p>Valiz toparlama, checkout.</p></div></div>
+          <div class="slot"><div class="time">17:55</div><div><strong>Bali uçuşu</strong><p>Havalimanına erken geçin.</p></div></div>
+          <div class="slot"><div class="time">21:05</div><div><strong>Bali varış</strong><p>Otele direkt transfer. Aktivite yok.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<section id="bali">
+  <div class="chapter">
+    <div class="panel">
+      <div class="eyebrow">Chapter II · Indonesia</div>
+      <h2 class="serif">Bali sahne sahne yaşanmalı.</h2>
+      <p class="lead">Ubud doğa ve spa, Canggu sosyal enerji, Seminyak şık akşamlar, Nusa Penida macera, Uluwatu final.</p>
+      <div class="list">
+        <div><strong>Ubud:</strong> Jungle villa, rice terrace, waterfall, couple spa.</div>
+        <div><strong>Canggu:</strong> Brunch, kahve, beach club, sunset.</div>
+        <div><strong>Seminyak:</strong> Potato Head, butik alışveriş, iyi restoran.</div>
+        <div><strong>Nusa Penida:</strong> Kelingking, Diamond Beach, dramatik manzaralar.</div>
+        <div><strong>Uluwatu:</strong> Cliff sunset, Kecak Dance, final dinner.</div>
+      </div>
+    </div>
+
+    <div class="photo">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?auto=format&fit=crop&w=1300&q=90" alt="Bali coast">
+    </div>
+  </div>
+</section>
+
+<section id="bali-plan">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Bali Daily Plan</div>
+      <h2 class="serif">Bali günlük planları</h2>
+    </div>
+    <p class="lead">Uzun Bali bölümü artık bölge akışına göre okunuyor: Ubud → Canggu/Seminyak → Nusa Penida → Uluwatu.</p>
+  </div>
+
+  <div class="plan-grid">
+
+    <details class="day" open>
+      <summary><div><div class="date">26 Temmuz · Ubud</div><h3 class="serif">Jungle Reset</h3></div><span class="mood">Dinlenme</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Villa kahvaltısı</strong><p>Havuz, dinlenme, ada moduna giriş.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Ubud merkez</strong><p>Kısa yürüyüş, kahve, hafif alışveriş.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Romantik Ubud dinner</strong><p>Erken ve sakin akşam yemeği.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">27 Temmuz · Ubud</div><h3 class="serif">Rice Terrace & Temple</h3></div><span class="mood">Doğa + kültür</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">07:00</div><div><strong>Tegallalang Rice Terrace</strong><p>En iyi ışık ve az kalabalık.</p></div></div>
+          <div class="slot"><div class="time">11:30</div><div><strong>Tirta Empul</strong><p>Tapınak ritüeli. Sarong ve saygılı kıyafet.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Otel + spa</strong><p>Günü yavaş kapatın.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">28 Temmuz · Ubud</div><h3 class="serif">Waterfall & Couple Spa</h3></div><span class="mood">Romantik</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Kanto Lampo / Tibumana</strong><p>Kaymaz sandalet ve su geçirmez çanta.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Hafif lunch</strong><p>Ubud’da sağlıklı bowl veya lokal warung.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Couple spa & flower bath</strong><p>Bu tatilin imza anlarından biri.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">29 Temmuz · Ubud → Canggu</div><h3 class="serif">Social Island’a Geçiş</h3></div><span class="mood">Transfer + brunch</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Checkout</strong><p>Yavaş kahvaltı, valiz.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Canggu check-in</strong><p>Kahve ve kısa çevre yürüyüşü.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Sunset drink</strong><p>Echo Beach / La Brisa çevresi.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">30 Temmuz · Canggu</div><h3 class="serif">Brunch & Beach Club</h3></div><span class="mood">Sosyal</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Canggu brunch</strong><p>Bali bowl, kahve, yavaş başlangıç.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Beach club</strong><p>La Brisa / The Lawn.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Sunset + dinner</strong><p>Rezervasyonlu rahat akşam.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">31 Temmuz · Seminyak</div><h3 class="serif">Chic Bali Day</h3></div><span class="mood">Şık</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Butik alışveriş</strong><p>Seminyak mağazaları.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Potato Head</strong><p>Daybed rezervasyonu iyi olur.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Modern Bali dinner</strong><p>Şık kombin gecesi.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">1–2 Ağustos · Canggu / Seminyak</div><h3 class="serif">Free Flow & Buffer Days</h3></div><span class="mood">Esnek</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Kahve rotası</strong><p>Canggu café hopping.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Otel / spa / alışveriş</strong><p>Yağmur alternatifi için ideal.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Favori mekana dönüş</strong><p>En sevdiğiniz yeri tekrar edin.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">3–4 Ağustos · Nusa Penida</div><h3 class="serif">Big Adventure</h3></div><span class="mood">Macera</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">1. Gün</div><div><strong>Broken Beach & Angel’s Billabong</strong><p>Fast boat sonrası daha hafif rota.</p></div></div>
+          <div class="slot"><div class="time">2. Gün</div><div><strong>Kelingking & Diamond Beach</strong><p>Manzara olağanüstü; iniş riskli olabilir.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Dinlenme</strong><p>Nusa Penida yorucu; akşamları basit tutun.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">5 Ağustos · Nusa Penida → Uluwatu</div><h3 class="serif">Final Chapter’a Geçiş</h3></div><span class="mood">Transfer</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Boat back</strong><p>Bali ana adaya dönüş.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Uluwatu check-in</strong><p>Otel, havuz, dinlenme.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Cliff dinner</strong><p>Yavaş ve şık bir giriş.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">6–10 Ağustos · Uluwatu</div><h3 class="serif">Beach, Sunset & Temple Days</h3></div><span class="mood">Final modu</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Plaj</div><div><strong>Padang Padang / Bingin / Melasti</strong><p>Her güne tek plaj veya tek beach club yeter.</p></div></div>
+          <div class="slot"><div class="time">Sunset</div><div><strong>Single Fin / Cliff bar</strong><p>Uluwatu’nun en iyi hissi gün batımında.</p></div></div>
+          <div class="slot"><div class="time">Kültür</div><div><strong>Uluwatu Temple & Kecak Dance</strong><p>Maymunlara dikkat; gözlük ve telefonu koruyun.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">11 Ağustos · Uluwatu</div><h3 class="serif">Final Dinner</h3></div><span class="mood">Romantik kapanış</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">Sabah</div><div><strong>Packing + kahvaltı</strong><p>Ertesi sabah uçuş var, valizi erkenden toparlayın.</p></div></div>
+          <div class="slot"><div class="time">Öğlen</div><div><strong>Son plaj / spa</strong><p>Yormayan aktivite.</p></div></div>
+          <div class="slot"><div class="time">Akşam</div><div><strong>Okyanus manzaralı final dinner</strong><p>Tatilin kapanış sahnesi. Erken uyku.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="day">
+      <summary><div><div class="date">12–13 Ağustos · Kuala Lumpur dönüş</div><h3 class="serif">Soft Return</h3></div><span class="mood">Rahat kapanış</span></summary>
+      <div class="day-content">
+        <div class="schedule">
+          <div class="slot"><div class="time">12 Ağu</div><div><strong>Bali → Kuala Lumpur</strong><p>07:00 kalkış, 10:05 Kuala Lumpur varış. Dinlenme ve son şehir akşamı.</p></div></div>
+          <div class="slot"><div class="time">13 Ağu</div><div><strong>Son alışveriş</strong><p>Suria KLCC / Pavilion. Havalimanına rahat geçin.</p></div></div>
+          <div class="slot"><div class="time">19:15</div><div><strong>İstanbul uçuşu</strong><p>14 Ağustos 06:55 İstanbul varış.</p></div></div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<section id="photos">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Traveler Style Photos</div>
+      <h2 class="serif">Gezgin fotoğrafı hissinde örnekler</h2>
+    </div>
+    <p class="lead">Instagram’dan izinsiz hotlink yerine güvenli, açık kaynak / ücretsiz lisanslı gezgin-fotoğrafçı görselleri.</p>
+  </div>
+
+  <div class="gallery">
+    <div class="gal">
+      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Batu%20Caves%20stairs%202022-05.jpg?width=900" alt="Batu Caves">
+      <span>Batu Caves · gerçek lokasyon fotoğrafı</span>
+    </div>
+    <div class="gal">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=900&q=90" alt="Tegallalang Rice Terrace">
+      <span>Tegallalang · Ubud sabahı</span>
+    </div>
+    <div class="gal">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?auto=format&fit=crop&w=900&q=90" alt="Bali coast">
+      <span>Bali coast · ada hissi</span>
+    </div>
+    <div class="gal">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=900&q=90" alt="Kuala Lumpur skyline">
+      <span>Kuala Lumpur · skyline</span>
+    </div>
+  </div>
+</section>
+
+<section id="food">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Local Food Guide</div>
+      <h2 class="serif">Yemeniz gerekenler</h2>
+    </div>
+    <p class="lead">Malezya sokak lezzetleri, Bali warung kültürü ve tropikal kahvaltılar.</p>
+  </div>
+
+  <div class="foodgrid">
+    <div class="food">
+      <img loading="lazy" src="https://commons.wikimedia.org/wiki/Special:FilePath/Nasi%20Lemak%2C%20Mamak%2C%20Sydney.jpg?width=800" alt="Nasi Lemak">
+      <div class="body"><span class="tag">Malezya</span><h3 class="serif">Nasi Lemak</h3><p>Hindistan cevizi sütlü pirinç, sambal, yumurta, fıstık.</p></div>
+    </div>
+
+    <div class="food">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=800&q=90" alt="Satay">
+      <div class="body"><span class="tag">Malezya</span><h3 class="serif">Satay</h3><p>Izgara şişler ve fıstık sosu. Jalan Alor’da deneyin.</p></div>
+    </div>
+
+    <div class="food">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1548943487-a2e4e43b4853?auto=format&fit=crop&w=800&q=90" alt="Nasi Goreng">
+      <div class="body"><span class="tag">Bali</span><h3 class="serif">Nasi Goreng</h3><p>Endonezya usulü kızarmış pilav. Warung’da daha iyi.</p></div>
+    </div>
+
+    <div class="food">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=90" alt="Bali Bowl">
+      <div class="body"><span class="tag">Bali</span><h3 class="serif">Bali Bowl</h3><p>Dragon fruit, mango, coconut, granola ve iyi kahve.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="reviews" class="dark">
+  <div class="dark-inner">
+    <div class="head">
+      <div>
+        <div class="eyebrow">Traveler Notes</div>
+        <h2 class="serif">Gerçek tatilci yorumlarından özetler</h2>
+      </div>
+    </div>
+
+    <div class="reviewgrid">
+      <div class="review"><div class="quote">“</div><h3 class="serif">Batu Caves</h3><p>Sabah erken gidin; sıcak ve kalabalık daha yönetilebilir.</p></div>
+      <div class="review"><div class="quote">“</div><h3 class="serif">Jalan Alor</h3><p>Kalabalık ama atmosfer ve sokak lezzeti güçlü.</p></div>
+      <div class="review"><div class="quote">“</div><h3 class="serif">Uluwatu Temple</h3><p>Sunset harika; maymunlara karşı eşyaları koruyun.</p></div>
+      <div class="review"><div class="quote">“</div><h3 class="serif">Kelingking</h3><p>Manzara olağanüstü; iniş yorucu ve riskli olabilir.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="head">
+    <div>
+      <div class="eyebrow">Travel Ops</div>
+      <h2 class="serif">Kişisel checklist</h2>
+    </div>
+  </div>
+
+  <div class="checklist">
+    <label class="todo"><input type="checkbox"> Pasaport geçerliliği kontrol edildi</label>
+    <label class="todo"><input type="checkbox"> Malezya MDAC kontrol edildi</label>
+    <label class="todo"><input type="checkbox"> Bali vize / levy kontrol edildi</label>
+    <label class="todo"><input type="checkbox"> Seyahat sigortası yapıldı</label>
+    <label class="todo"><input type="checkbox"> eSIM / roaming planlandı</label>
+    <label class="todo"><input type="checkbox"> Uluwatu final dinner rezervasyonu</label>
+    <label class="todo"><input type="checkbox"> Beach club daybed rezervasyonu</label>
+    <label class="todo"><input type="checkbox"> Spa rezervasyonu</label>
+    <label class="todo"><input type="checkbox"> Bali transferleri ayarlandı</label>
+    <label class="todo"><input type="checkbox"> Güneş kremi / sinek kovucu</label>
+    <label class="todo"><input type="checkbox"> Powerbank / adaptör</label>
+    <label class="todo"><input type="checkbox"> Şık akşam kombinleri</label>
+  </div>
+</section>
+
+<footer>
+  <h3 class="serif">Kuala Lumpur & Bali Travel OS</h3>
+  <p>20 Temmuz – 14 Ağustos 2026 · kişisel takip + luxury guide</p>
+</footer>
+
+</body>
+</html>
